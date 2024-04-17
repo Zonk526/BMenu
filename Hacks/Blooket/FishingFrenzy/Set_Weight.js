@@ -10,9 +10,9 @@ const setWeight = () => {
 
     let amount = prompt("Whose fossils would you like to reset?");
 
-    if (typeof amount == "number") {
-        stateNode.state.weight = amount;
-        stateNode.state.weight2 = amount;
+    if (typeof parseInt(amount) == "number") {
+        stateNode.state.weight = parseInt(amount);
+        stateNode.state.weight2 = parseInt(amount);
     }
 
     stateNode.props.liveGameController.setVal({
