@@ -11,12 +11,12 @@ const autoAnswer = () => {
         } else {
             Object.values(document.querySelector("[class*='typingAnswerWrapper']"))[1].children._owner.stateNode.sendAnswer(questions[state.question.number - 1].answers[0]);
         } else if (window.location.href.includes('battleroyale')) {
-             if (document.querySelector("[class*='typingAnswerWrapper']")) {
+            if (document.querySelector("[class*='typingAnswerWrapper']")) {
                 Object.values(document.querySelector("[class*='typingAnswerWrapper']"))[1].children._owner.stateNode.sendAnswer(props.client.question.answers[0]);
             } else {
                 let answerContainers = document.querySelectorAll(`[class*='answerContainer']`);
 
-                if (answerContainers) [...answerContainers][Array.from(answerContainers).map((x, i) => x.innerHTML.includes(props.client.question.correctAnswers[0]) ? i : null).filter(i => i !== null)[0]].click();
+                [...answerContainers][Array.from(answerContainers).map((x, i) => x.innerHTML.includes(props.client.question.correctAnswers[0]) ? i : null).filter(i => i !== null)[0]].click();
             }
         }
     }, 500);
