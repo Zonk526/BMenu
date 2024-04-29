@@ -11,11 +11,16 @@ const chooseAnyGamemode = () => {
 
     const gamemodes = ["Racing", "Classic", "Factory", "Cafe", "Defense2", "Defense", "Royale", "Gold", "Candy", "Brawl", "Hack", "Pirate", "Fish", "Dino", "Toy", "Rush"];
 
-    let type = prompt(`Which gamemode? \n${gamemodes.slice(0, gamemodes.length - 1).join(", ")} or ${gamemodes[gamemodes.length - 1]}`)
+    if (location.pathname == "/host/settings") {
+        const type = prompt(`Which gamemode do you want to switch to? (Case sensitive)\n${gamemodes.slice(0, gamemodes.length - 1).join(", ")} or ${gamemodes[gamemodes.length - 1]}`);
 
-    location.pathname == "/host/settings" ? gamemodes.includes(type) ? (
-        stateNode.setState({ settings: { type: type } })
-    ) : alert("Gamemode not found, make sure you spelled and capitalized it right.") : alert("Run this script on the host settings page");
+        if (type == 'Pirate' && !window.location.href.includes('goldquest')) {
+            alert('To switch to pirate run this in the goldquest host screen'); 
+            window.location.href = 'https://goldquest.blooket.com/host/settings';
+        }
+
+        gamemodes.includes(type) ? stateNode.setState({ settings: { type } }) : alert("Gamemode not found, make sure you spelled and capitalized it right.");
+    } else alert("Run this script on the host settings page");
 }
 
 chooseAnyGamemode();
