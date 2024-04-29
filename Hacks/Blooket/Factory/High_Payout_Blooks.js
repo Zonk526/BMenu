@@ -3,7 +3,7 @@ const highPayoutBlooks = () => {
         {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
     })())[1].children[0]._owner;
 
-    stateNode.setState({ blooks: stateNode.state.blooks.map(b => ({ ...b, cash: b.price.map(p =>  p = p*10)})) })
+    stateNode.setState({ blooks: stateNode.state.blooks.map(b => ({ ...b, cash: b.cash.map(c =>  c = c*10)})) })
 }
 
 highPayoutBlooks();
