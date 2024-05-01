@@ -43,10 +43,17 @@ async function getClientMedia() {
 
 // Get the server side data for the assignment
 
-async function getMediaSource(mediaId) {
+async function getMediaSource(mediaId, assignmentId) {
 	const apiUrl = `https://edpuzzle.com/api/v3/media/${mediaId}`;
 
-	return await fetch(apiUrl, {credentials: "omit"}).then(response => {
+	return await fetch(apiUrl, {
+		credentials: "omit",
+		headers: {
+			'X-Edpuzzle-Preferred-Language': 'en',
+			'X-Edpuzzle-Referrer': `https://edpuzzle.com/assignments/${assignmentId}/watch`,
+			'X-Edpuzzle-Web-Version': '7.35.126.9991233182693272'
+		}
+		}).then(response => {
 		if (response.ok) {
 			return response.json().then(data => {
 				return data.questions;
@@ -129,7 +136,7 @@ async function nullbyte() {
 	
 	// Call getAttempt(), call getMediaSource(), search through correct answers, call sendOutAnswers(), call finishVideo()
 
-	await getAttempt().then(attemptData => getMediaSource(attemptData.mediaId).then(questions => {
+	await getAttempt().then(attemptData => getMediaSource(attemptData.mediaId, attemptData.teacherAssignmentId).then(questions => {
         console.log(attemptData);
 
 		questions.filter(question => question.type == "multiple-choice").forEach(question => {
