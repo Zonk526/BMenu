@@ -35,29 +35,22 @@ const seeThroughChests = () => {
             text.style.fontWeight = 'bold';
             text.style.fontFamily = 'Nunito, sans-serif';
 
-            div.style.height = '76.55px';
-            div.style.width = '88px';
             div.style.position = 'relative';
             div.style.display = 'flex';
-            div.style.justifyContent = 'flex-end';
-            div.style.marginLeft = '30%';
+            div.style.justifyContent = 'center';
+
+            img.style.objectFit = 'contain';
+            img.style.width = '40%';
 
             choices[i].appendChild(div);
 
             if (choice.blook) {
-                img.style.objectFit = 'contain';
-                img.style.width = '100%';
                 img.src = blookImages[choice.blook];
-
-                div.appendChild(img);
             } else {
-                img.style.objectFit = 'contain';
-                img.style.width = '100%';
-                img.src = blookImages.gold;
-
-                div.appendChild(img);
+                img.src = blookImages.gold;                
             }
 
+            div.appendChild(img);
             choices[i].appendChild(text);
         });
         
