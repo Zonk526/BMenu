@@ -9,9 +9,10 @@ const autoAnswer = () => {
         if (stateNode.state.stage && stateNode.state.stage == "question") if (stateNode.state.question.qType != "typing") {
             stateNode.onAnswer ? stateNode.onAnswer('shitty website lol') : 
             [...answerContainers][Array.from(answerContainers).map((x, i) => x.innerHTML.includes(stateNode.state.question.correctAnswers[0]) ? i :
-            null)[0]]?.click()
+            null).filter(x => x !== null)[0]]?.click()
 
         } else {
+            stateNode.onAnswer ? stateNode.onAnswer('this one too lmao') : 
             Object.values(document.querySelector("[class*='typingAnswerWrapper']"))[1].children._owner.stateNode.sendAnswer(stateNode.state.question.answers[0]);
 
         } else if (window.location.href.includes('battleroyale')) {
