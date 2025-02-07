@@ -716,29 +716,147 @@ const maxLevelAbilities = () => {
 
 
 const generalScripts = [autoAnswer, unlockAllBlooks, chooseAnyGamemode];
+const menuHtml = 
+`<div>
+            <div class="menu">
+                <div class="header">
+                    Menu
+                </div>
+                <hr>
+                <div class="buttonsHolder"></div>
+                <hr>
+                <div class="injectButton">
+                    <button class="buttons" onclick="inject()">Inject</button>
+                </div>
+            </div>
+            <style>
+                .menu {
+                    color:white;
+                    background: hsl(0, 0%, 15%);
+                    width: 400px;
+                    height: 500px;
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    border-radius: 8px;
+                    border-style: solid;
+                    border-color: hsl(0, 0%, 8%);
+                    border-width: 8px;
+                }
+
+                .header {
+                    padding: 20px;
+                    font-size: 35px;
+                    text-align: center;
+                    border-style: solid;
+                    border-color: hsl(0, 0%, 8%);
+                    border-width: 8px;
+                    border-top: none;
+                    border-left: none;
+                    border-right: none;
+                }
+
+                .header:hover {
+                    cursor: move;
+                }
+
+                .injectButton {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .buttonsHolder {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    row-gap: 10px;
+                }
+
+                hr {
+                    color:white;
+                    width: 90%;
+                }
+
+                button {
+                    color:white;
+                    background: hsl(0, 0%, 20%);
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: bold;
+                    font-size: 15px;
+                    padding: 10px;
+                    width: 175px;
+                    height: 45px;
+                    box-shadow: none;
+                    border-radius: 8px;
+                    border: none;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    position: relative;
+                }
+
+                button:hover {
+                    cursor: pointer;
+                    background-color: hsl(0, 0%, 30%);
+                }
+            </style>
+            <script src="injector.js"></script>
+        </div>`;
+
+let bindWindow = document.createElement('iframe');
+document.body.append(bindWindow);
+window.prompt = bindWindow.contentWindow.prompt.bind(window);
+window.alert = bindWindow.contentWindow.alert.bind(window);
+bindWindow.remove();
+
+let initialUrl = document.location.host.split('.')[0];
+let buttonsHolder = document.querySelector('.buttonsHolder');
+const gamemodeScripts = {
+    "deceptivedinos" : [noMoreGettingCaught, catchSomeoneCheating, resetPlayersFossils, setFossilMultiplier],
+    "goldquest" : [resetPlayerGold, seeThroughChests, forceSwap],
+    "cryptohack" : [neverGetNothing, neverLoseCrypto, forceHack, forceGlitch,
+            constantlyChangePassword, takePlayersCrypto, autoPlayCrypto, noGlitches, autoChoosePassword],
+    "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot],
+    "cafe" : [unlockAllFoods, maxLevelFood, maxStockFood],
+    "fishingfrenzy" : [setWeight, forceFrenzy], 
+    "Survival" : [maxLevelAbilities]
+}
+
+let initialScripts = gamemodeScripts["deceptivedinos"];
+
+try {
+    buttonsHolder.innerHTML = "";
+    initialScripts.forEach(script => {
+        let button = document.createElement('button');
+        button.setAttribute('onClick', `fireScript(${script.name})`);
+        button.innerHTML = `${script.name}`;
+        button.classList.add('buttons');
+        buttonsHolder.appendChild(button);
+    });
+} catch {
+    alert('Could not find gamemode');
+    throw new Error('Could not find gamemode');
+}
 
 function inject() {
     let url = document.location.host.split('.')[0];
-    let buttonsHolder = document.querySelector('.buttonsHolder');
-    const gamemodeScripts = {
-        "deceptivedinos" : [noMoreGettingCaught, catchSomeoneCheating, resetPlayersFossils, setFossilMultiplier],
-        "goldquest" : [resetPlayerGold, seeThroughChests, forceSwap],
-        "cryptohack" : [neverGetNothing, neverLoseCrypto, forceHack, forceGlitch,
-             constantlyChangePassword, takePlayersCrypto, autoPlayCrypto, noGlitches, autoChoosePassword],
-        "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot],
-        "cafe" : [unlockAllFoods, maxLevelFood, maxStockFood],
-        "fishingfrenzy" : [setWeight, forceFrenzy], 
-        "Survival" : [maxLevelAbilities]
-    }
+    buttonsHolder = document.querySelector('.buttonsHolder');
 
-    let scripts = gamemodeScripts[url];
-    scripts.forEach(script => {
-        let button = document.createElement('button')
-        button.setAttribute('onClick', `fireScript(${script.name})`)
-        button.innerHTML = `${script.name}`
-        button.classList.add('buttons')
-        buttonsHolder.appendChild(button)
-    });
+    let scripts = gamemodeScripts["deceptivedinos"];
+    
+    try {
+        buttonsHolder.innerHTML = "";
+        scripts.forEach(script => {
+            let button = document.createElement('button');
+            button.setAttribute('onClick', `fireScript(${script.name})`);
+            button.innerHTML = `${script.name}`;
+            button.classList.add('buttons');
+            buttonsHolder.appendChild(button);
+        });
+    } catch {
+        alert('Could not find gamemode');
+        throw new Error('Could not find gamemode');
+    }
 }
 
 const fireScript = (script) => {
