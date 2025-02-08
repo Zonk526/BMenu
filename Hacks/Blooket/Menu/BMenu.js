@@ -369,6 +369,21 @@ const neverGetHacked = () => {
     }, 10);
 }
 
+const giveSomeoneCrypto = () => {
+    const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
+        {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
+    })())[1].children[0]._owner;
+
+    stateNode.props.liveGameController.getDatabaseVal('c', players => {
+        let [player, {cr}] = Object.entries(players).find(([name, {cr}]) => cr == Math.min(...Object.values(players).map(player=> player.cr)));
+
+        stateNode.props.liveGameController.setVal({
+            path: `c/${stateNode.props.client.name}/tat`,
+            val: `${player}:-${cr+10000000000000000}`
+        })
+    });
+}
+
 
 
 //Deceptive Dinos
@@ -887,7 +902,7 @@ function inject() {
         "deceptivedinos" : [noMoreGettingCaught, catchSomeoneCheating, resetAPlayersFossils, setFossilMultiplier],
         "goldquest" : [resetAPlayersGold, transparentChests, forceSwap],
         "cryptohack" : [neverGetNothing, neverGetHacked, forceHack,
-                constantlyChangePasswords, takePlayersCrypto, autoPlayCrypto, autoGuessPassword],
+                constantlyChangePasswords, takePlayersCrypto, autoPlayCrypto, autoGuessPassword, giveSomeoneCrypto],
         "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot, forceGlitch, neverGetGlitches],
         "cafe" : [unlockAllFoods, maxLevelFood, maxStockFood],
         "fishingfrenzy" : [setWeight, forceFrenzy], 
