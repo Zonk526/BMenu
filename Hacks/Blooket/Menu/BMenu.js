@@ -160,6 +160,21 @@ const transparentChests = () => {
     }, 100);
 }
 
+const giveSomeoneGold = () => {
+    const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
+        {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
+    })())[1].children[0]._owner;
+
+    stateNode.props.liveGameController.getDatabaseVal('c', players => {
+        let [player, {g}] = Object.entries(players).map(player => ([player[0], {g : player[1].g ? player[1].g : 0}])).find(([name, {g}]) => g == Math.min(...Object.values(players).map(player => player.g ? player.g : 0)));
+
+        stateNode.props.liveGameController.setVal({
+            path: `c/${stateNode.props.client.name}/tat`,
+            val: `${player}:-${g+100000000000000}`
+        })
+    });
+}
+
 const forceSwap = () => {
     const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
         {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
@@ -375,7 +390,7 @@ const giveSomeoneCrypto = () => {
     })())[1].children[0]._owner;
 
     stateNode.props.liveGameController.getDatabaseVal('c', players => {
-        let [player, {cr}] = Object.entries(players).find(([name, {cr}]) => cr == Math.min(...Object.values(players).map(player=> player.cr)));
+        let [player, {cr}] = Object.entries(players).map(player => ([player[0], {cr : player[1].cr ? player[1].cr : 0}])).find(([name, {cr}]) => cr == Math.min(...Object.values(players).map(player => player.cr ? player.cr : 0)));
 
         stateNode.props.liveGameController.setVal({
             path: `c/${stateNode.props.client.name}/tat`,
@@ -900,7 +915,7 @@ function inject() {
 
     const gamemodeScripts = {
         "deceptivedinos" : [noMoreGettingCaught, catchSomeoneCheating, resetAPlayersFossils, setFossilMultiplier],
-        "goldquest" : [resetAPlayersGold, transparentChests, forceSwap],
+        "goldquest" : [resetAPlayersGold, transparentChests, forceSwap, giveSomeoneGold],
         "cryptohack" : [neverGetNothing, neverGetHacked, forceHack,
                 constantlyChangePasswords, takePlayersCrypto, autoPlayCrypto, autoGuessPassword, giveSomeoneCrypto],
         "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot, forceGlitch, neverGetGlitches],
