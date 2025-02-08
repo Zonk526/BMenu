@@ -80,7 +80,7 @@ const resetAPlayersGold = () => {
     let target = prompt("Whose gold would you like to reset?");
 
     stateNode.props.liveGameController.getDatabaseVal('c', players => {
-        let [player, { g }] = Object.entries(players).find(([name]) => name.toLowerCase() == target.toLowerCase());
+        let [player, {g}] = Object.entries(players).find(([name]) => name.toLowerCase() == target.toLowerCase());
 
         stateNode.setState({
             players: (players ? Object.entries(players).map(([name, { b, g }]) => ({name, blook: b, gold: g})) : []),
@@ -379,7 +379,7 @@ const giveSomeoneCrypto = () => {
 
         stateNode.props.liveGameController.setVal({
             path: `c/${stateNode.props.client.name}/tat`,
-            val: `${player}:-${cr+10000000000000000}`
+            val: `${player}:-${cr+100000000000000}`
         })
     });
 }
