@@ -715,7 +715,6 @@ const maxLevelAbilities = () => {
 
 
 
-const generalScripts = [autoAnswer, unlockAllBlooks, chooseAnyGamemode];
 const menuHtml = 
 `<div class="theMenu">
         <div class="bHeader">
@@ -843,22 +842,26 @@ const menuHtml =
     </style>`;
 
 let bindWindow = document.createElement('iframe');
+
 document.body.append(bindWindow);
 window.prompt = bindWindow.contentWindow.prompt.bind(window);
 window.alert = bindWindow.contentWindow.alert.bind(window);
 bindWindow.remove();
 
+let menuDiv = document.createElement('div');
+
+menuDiv.classList.add('BMenu');
+menuDiv.innerHTML = menuHtml;
+document.body.appendChild(menuDiv);
+
 function inject() {
     console.log('Injecting...');
 
-    let menuDiv = document.createElement('div');
-
-    menuDiv.classList.add('BMenu');
-    menuDiv.innerHTML = menuHtml;
-    document.body.appendChild(menuDiv);
-
+    const generalScripts = [autoAnswer, unlockAllBlooks, chooseAnyGamemode];
+    let scripts = [];
     let url = document.location.host.split('.')[0];
     let buttonsHolder = document.querySelector('.buttonsHolder');
+
     const gamemodeScripts = {
         "deceptivedinos" : [noMoreGettingCaught, catchSomeoneCheating, resetAPlayersFossils, setFossilMultiplier],
         "goldquest" : [resetAPlayersGold, transparentChests, forceSwap],
@@ -869,8 +872,9 @@ function inject() {
         "fishingfrenzy" : [setWeight, forceFrenzy], 
         "Survival" : [maxLevelAbilities]
     }
-
-    let scripts = gamemodeScripts[url];
+    
+    scripts[0] = generalScripts[0];
+    gamemodeScripts[url].forEach(script => scripts.push(script));
     
     try {
         buttonsHolder.innerHTML = "";
@@ -927,6 +931,20 @@ function onDrag({movementX, movementY}) {
     bMenu.style.left = "" + (left + movementX) + "px";
     bMenu.style.top = "" + (topp + movementY) + "px";
 }
+
+function hideMenu(e) {
+    if (bMenu.hidden) {
+        if (e.key == 'j') {
+            bMenu.hidden = false;
+        }
+    } else {
+        if (e.key == 'j') {
+            bMenu.hidden = true;
+        }
+    }
+}
+
+document.addEventListener('keydown', hideMenu);
 
 bHeader.addEventListener("mousedown", () => {
     bHeader.addEventListener("mousemove", onDrag);
