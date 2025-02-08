@@ -853,6 +853,8 @@ bindWindow.remove();
 function inject() {
     console.log('Injecting...');
 
+    document.body.innerHTML += menuHtml;
+
     let url = document.location.host.split('.')[0];
     let buttonsHolder = document.querySelector('.buttonsHolder');
     const gamemodeScripts = {
@@ -866,7 +868,7 @@ function inject() {
         "Survival" : [maxLevelAbilities]
     }
 
-    let scripts = gamemodeScripts["cryptohack"];
+    let scripts = gamemodeScripts[url];
     
     try {
         buttonsHolder.innerHTML = "";
