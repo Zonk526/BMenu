@@ -717,8 +717,7 @@ const maxLevelAbilities = () => {
 
 const generalScripts = [autoAnswer, unlockAllBlooks, chooseAnyGamemode];
 const menuHtml = 
-`<div class="BMenu">
-    <div class="theMenu">
+`<div class="theMenu">
         <div class="bHeader">
             BMenu
         </div>
@@ -841,8 +840,7 @@ const menuHtml =
             cursor: pointer;
             background-color: hsl(0, 0%, 30%);
         }
-    </style>
-</div>`;
+    </style>`;
 
 let bindWindow = document.createElement('iframe');
 document.body.append(bindWindow);
@@ -853,7 +851,11 @@ bindWindow.remove();
 function inject() {
     console.log('Injecting...');
 
-    document.body.innerHTML += menuHtml;
+    let menuDiv = document.createElement('div');
+
+    menuDiv.classList.add('BMenu');
+    menuDiv.innerHTML = menuHtml;
+    document.body.appendChild(menuDiv);
 
     let url = document.location.host.split('.')[0];
     let buttonsHolder = document.querySelector('.buttonsHolder');
