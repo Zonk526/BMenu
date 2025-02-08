@@ -182,38 +182,6 @@ const forceSwap = () => {
 
 
 
-const forceGlitch = () => {
-    const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
-        {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
-    })())[1].children[0]._owner;
-
-    let inject = document.createElement('iframe');
-    document.body.append(inject);
-    window.alert = inject.contentWindow.alert.bind(window);
-    inject.remove();
-
-    const glitches = ["Lunch Break", "Ad Spam", "Error 37", "Night Time", "#LOL", "Jokester", "Slow Mo", "Dance Party", "Vortex", "Reverse", "Flip", "Micro"];
-
-    if (location.pathname == "/host/settings") {
-        const type = prompt(`Which gamemode do you want to switch to? (Case sensitive)\n${gamemodes.slice(0, gamemodes.length - 1).join(", ")} or ${gamemodes[gamemodes.length - 1]}`);
-
-        if (type == 'Pirate' && !window.location.href.includes('goldquest')) {
-            alert('To switch to pirate run this in the goldquest host screen'); 
-            window.location.href = 'https://goldquest.blooket.com/host/settings';
-        }
-
-        gamemodes.includes(type) ? stateNode.setState({ settings: { type } }) : alert("Gamemode not found, make sure you spelled and capitalized it right.");
-    } else alert("Run this script on the host settings page");
-
-    let glitch = prompt("Choose a glitch: Lunch Break, Ad Spam, Error 37, Night Time, #LOL, Jokester, Slow Mo, Dance Party, Vortex, Reverse, Flip, Micro");
-
-    const t = {
-        name: glitch
-    }
-
-    stateNode.chooseGlitch(t);
-}
-
 const forceHack = () => {
     const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
         {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
@@ -256,7 +224,7 @@ const neverGetNothing = () => {
         if (stateNode.state.choices[0].type) 
         stateNode.state.choices[0].type == 'nothing' ? (stateNode.setState({ choices: [{type: 'mult', val: 3, rate: 0.075, blook: 'Brainy Bot', text: 'Triple Crypto'}] }), 
         console.log('nerds tried to give me nothing LMAO')) : null;
-    }, 1000);
+    }, 10);
 }
 
 const neverLoseCrypto = () => {
@@ -359,37 +327,6 @@ const autoPlayCrypto = () => {
     }, 450);
 }
 
-const neverGetGlitches = () => {
-    setInterval(() => {
-        const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
-            {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
-        })())[1].children[0]._owner;
-
-        stateNode.setState({
-            bites: 0,
-            ads: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            hazards: ['', '', '', '', ''],
-            color: "",
-            lol: false,
-            joke: false,
-            slow: false,
-            dance: false,
-            glitch: "",
-            glitcherName: "",
-            glitcherBlook: ""
-        });
-
-        clearTimeout(stateNode.adTimeout);
-        clearInterval(stateNode.hazardInterval);
-        clearTimeout(stateNode.nightTimeout);
-        clearTimeout(stateNode.glitchTimeout);
-        clearTimeout(stateNode.lolTimeout);
-        clearTimeout(stateNode.jokeTimeout);
-        clearTimeout(stateNode.slowTimeout);
-        clearTimeout(stateNode.danceTimeout);
-    }, 500);
-}
-
 const autoGuessPassword = () => {
     setInterval(() => {
         const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')){
@@ -398,6 +335,38 @@ const autoGuessPassword = () => {
 
         if (stateNode.state.stage == 'hack') stateNode.guessPassword(stateNode.state.correctPassword);
     }, 400);
+}
+
+const neverGetHacked = () => {
+    setInterval(() => {
+        const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')){
+            return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
+        })())[1].children[0]._owner;
+
+        if (stateNode.state.hackerAmount) { 
+            stateNode.props.liveGameController.setVal({
+                path: `c/${stateNode.props.client.name}`,
+                val: {
+                    cr: stateNode.state.crypto += parseInt(stateNode.state.hackerAmount)
+                }
+            });
+
+            if (stateNode.state.hack) stateNode.setState({
+                bites: 0,
+                ads: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                hazards: ['', '', '', '', ''],
+                color: "",
+                lol: false,
+                joke: false,
+                slow: false,
+                dance: false,
+                hack: "",
+                hackerName: "",
+                hackerAmount: "",
+                hackerBlook: ""
+            });
+        }
+    }, 10);
 }
 
 
@@ -636,6 +605,58 @@ const autoPlayCafe = () => {
 
 
 
+const neverGetGlitches = () => {
+    setInterval(() => {
+        const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
+            {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
+        })())[1].children[0]._owner;
+
+        stateNode.setState({
+            bites: 0,
+            ads: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            hazards: ['', '', '', '', ''],
+            color: "",
+            lol: false,
+            joke: false,
+            slow: false,
+            dance: false,
+            glitch: "",
+            glitcherName: "",
+            glitcherBlook: ""
+        });
+
+        clearTimeout(stateNode.adTimeout);
+        clearInterval(stateNode.hazardInterval);
+        clearTimeout(stateNode.nightTimeout);
+        clearTimeout(stateNode.glitchTimeout);
+        clearTimeout(stateNode.lolTimeout);
+        clearTimeout(stateNode.jokeTimeout);
+        clearTimeout(stateNode.slowTimeout);
+        clearTimeout(stateNode.danceTimeout);
+    }, 500);
+}
+
+const forceGlitch = () => {
+    const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
+        {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
+    })())[1].children[0]._owner;
+
+    let inject = document.createElement('iframe');
+    const glitches = ["Lunch Break", "Ad Spam", "Error 37", "Night Time", "#LOL", "Jokester", "Slow Mo", "Dance Party", "Vortex", "Reverse", "Flip", "Micro"];
+
+    document.body.append(inject);
+    window.alert = inject.contentWindow.alert.bind(window);
+    inject.remove();
+
+    let glitch = prompt(`${glitches.slice(0, glitches.length - 1).join(', ')} or ${glitches[glitches.length-1]}`);
+
+    const t = {
+        name: glitch
+    }
+
+    stateNode.chooseGlitch(t);
+}
+
 const forceCashFromAllBlooks = () => {
     const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
         {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
@@ -865,9 +886,9 @@ function inject() {
     const gamemodeScripts = {
         "deceptivedinos" : [noMoreGettingCaught, catchSomeoneCheating, resetAPlayersFossils, setFossilMultiplier],
         "goldquest" : [resetAPlayersGold, transparentChests, forceSwap],
-        "cryptohack" : [neverGetNothing, neverLoseCrypto, forceHack, forceGlitch,
-                constantlyChangePasswords, takePlayersCrypto, autoPlayCrypto, neverGetGlitches, autoGuessPassword],
-        "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot],
+        "cryptohack" : [neverGetNothing, neverGetHacked, forceHack,
+                constantlyChangePasswords, takePlayersCrypto, autoPlayCrypto, autoGuessPassword],
+        "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot, forceGlitch, neverGetGlitches],
         "cafe" : [unlockAllFoods, maxLevelFood, maxStockFood],
         "fishingfrenzy" : [setWeight, forceFrenzy], 
         "Survival" : [maxLevelAbilities]
