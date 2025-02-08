@@ -67,7 +67,7 @@ const chooseAnyGamemode = () => {
 
 
 
-const resetPlayerGold = () => {
+const resetAPlayersGold = () => {
     const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
         {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
     })())[1].children[0]._owner;
@@ -100,7 +100,7 @@ const resetPlayerGold = () => {
     console.log("done");
 }
 
-const seeThroughChests = () => {
+const transparentChests = () => {
     let notSet = true;
 
     const blookImages = {
@@ -229,7 +229,7 @@ const forceHack = () => {
     }) : alert('You need to enter this in the prize stage');
 }
 
-const constantlyChangePassword = () => {
+const constantlyChangePasswords = () => {
     setInterval(() => {
         const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
             {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
@@ -359,7 +359,7 @@ const autoPlayCrypto = () => {
     }, 450);
 }
 
-const noGlitches = () => {
+const neverGetGlitches = () => {
     setInterval(() => {
         const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
             {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
@@ -390,7 +390,7 @@ const noGlitches = () => {
     }, 500);
 }
 
-const autoChoosePassword = () => {
+const autoGuessPassword = () => {
     setInterval(() => {
         const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')){
             return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
@@ -462,7 +462,7 @@ const catchSomeoneCheating = () => {
     stateNode.state.isCheating = false;
 }
 
-const resetPlayersFossils = () => {
+const resetAPlayersFossils = () => {
     let { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')){
         return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
     })())[1].children[0]._owner;
@@ -809,47 +809,48 @@ window.prompt = bindWindow.contentWindow.prompt.bind(window);
 window.alert = bindWindow.contentWindow.alert.bind(window);
 bindWindow.remove();
 
-let initialUrl = document.location.host.split('.')[0];
-let buttonsHolder = document.querySelector('.buttonsHolder');
-const gamemodeScripts = {
-    "deceptivedinos" : [noMoreGettingCaught, catchSomeoneCheating, resetPlayersFossils, setFossilMultiplier],
-    "goldquest" : [resetPlayerGold, seeThroughChests, forceSwap],
-    "cryptohack" : [neverGetNothing, neverLoseCrypto, forceHack, forceGlitch,
-            constantlyChangePassword, takePlayersCrypto, autoPlayCrypto, noGlitches, autoChoosePassword],
-    "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot],
-    "cafe" : [unlockAllFoods, maxLevelFood, maxStockFood],
-    "fishingfrenzy" : [setWeight, forceFrenzy], 
-    "Survival" : [maxLevelAbilities]
-}
-
-let initialScripts = gamemodeScripts["deceptivedinos"];
-
-try {
-    buttonsHolder.innerHTML = "";
-    initialScripts.forEach(script => {
-        let button = document.createElement('button');
-        button.setAttribute('onClick', `fireScript(${script.name})`);
-        button.innerHTML = `${script.name}`;
-        button.classList.add('buttons');
-        buttonsHolder.appendChild(button);
-    });
-} catch {
-    alert('Could not find gamemode');
-    throw new Error('Could not find gamemode');
-}
-
 function inject() {
-    let url = document.location.host.split('.')[0];
-    buttonsHolder = document.querySelector('.buttonsHolder');
+    console.log('Injecting...');
 
-    let scripts = gamemodeScripts["deceptivedinos"];
+    let url = document.location.host.split('.')[0];
+    let buttonsHolder = document.querySelector('.buttonsHolder');
+    const gamemodeScripts = {
+        "deceptivedinos" : [noMoreGettingCaught, catchSomeoneCheating, resetAPlayersFossils, setFossilMultiplier],
+        "goldquest" : [resetAPlayersGold, transparentChests, forceSwap],
+        "cryptohack" : [neverGetNothing, neverLoseCrypto, forceHack, forceGlitch,
+                constantlyChangePasswords, takePlayersCrypto, autoPlayCrypto, neverGetGlitches, autoGuessPassword],
+        "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot],
+        "cafe" : [unlockAllFoods, maxLevelFood, maxStockFood],
+        "fishingfrenzy" : [setWeight, forceFrenzy], 
+        "Survival" : [maxLevelAbilities]
+    }
+
+    let scripts = gamemodeScripts["cryptohack"];
     
     try {
         buttonsHolder.innerHTML = "";
         scripts.forEach(script => {
             let button = document.createElement('button');
+            let scriptName = script.name
+            let upperCaseIndex = [];
+            let finalName = "";
+
+            for (let i = 0; i < scriptName.length - 1; i++) {
+                if (scriptName[i] == scriptName[i].toUpperCase()) {
+                    upperCaseIndex.push(i)
+                }
+            }
+
+            finalName = `${scriptName[0].toUpperCase() + scriptName.slice(1, upperCaseIndex[0])}`;
+
+            upperCaseIndex.forEach((i, index) => {
+                if (index + 1) {
+                    finalName = `${finalName} ${scriptName.slice(i, upperCaseIndex[index + 1])}`;
+                }
+            });
+
             button.setAttribute('onClick', `fireScript(${script.name})`);
-            button.innerHTML = `${script.name}`;
+            button.innerHTML = finalName;
             button.classList.add('buttons');
             buttonsHolder.appendChild(button);
         });
@@ -858,6 +859,8 @@ function inject() {
         throw new Error('Could not find gamemode');
     }
 }
+
+inject();
 
 const fireScript = (script) => {
     if (typeof script != 'function') { 
