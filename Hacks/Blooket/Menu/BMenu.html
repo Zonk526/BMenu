@@ -1,85 +1,131 @@
-<div>
-            <div class="menu">
-                <div class="header">
-                    Menu
-                </div>
-                <hr>
-                <div class="buttonsHolder"></div>
-                <hr>
-                <div class="injectButton">
-                    <button class="buttons" onclick="inject()">Inject</button>
-                </div>
-            </div>
-            <style>
-                .menu {
-                    color:white;
-                    background: hsl(0, 0%, 15%);
-                    width: 400px;
-                    height: 500px;
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-weight: bold;
-                    border-radius: 8px;
-                    border-style: solid;
-                    border-color: hsl(0, 0%, 8%);
-                    border-width: 8px;
-                }
-
-                .header {
-                    padding: 20px;
-                    font-size: 35px;
-                    text-align: center;
-                    border-style: solid;
-                    border-color: hsl(0, 0%, 8%);
-                    border-width: 8px;
-                    border-top: none;
-                    border-left: none;
-                    border-right: none;
-                }
-
-                .header:hover {
-                    cursor: move;
-                }
-
-                .injectButton {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
-
-                .buttonsHolder {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    row-gap: 10px;
-                }
-
-                hr {
-                    color:white;
-                    width: 90%;
-                }
-
-                button {
-                    color:white;
-                    background: hsl(0, 0%, 20%);
-                    font-family: Arial, Helvetica, sans-serif;
-                    font-weight: bold;
-                    font-size: 15px;
-                    padding: 10px;
-                    width: 175px;
-                    height: 45px;
-                    box-shadow: none;
-                    border-radius: 8px;
-                    border: none;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    position: relative;
-                }
-
-                button:hover {
-                    cursor: pointer;
-                    background-color: hsl(0, 0%, 30%);
-                }
-            </style>
-            <script src="BMenu.js"></script>
+<div class="BMenu">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <div class="menu">
+        <div class="header">
+            BMenu
         </div>
+        <hr>
+        <div class="buttonsHolder"></div>
+        <hr>
+        <div class="injectButton">
+            <button onclick="inject()">Inject</button>
+        </div>
+    </div>
+    <style>
+        .BMenu {
+            z-index: 9999;
+        }
+
+        .menu {
+            color:white;
+            background: hsl(0, 0%, 15%);
+            width: 400px;
+            height: 470px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            border-radius: 8px;
+            border-style: solid;
+            border-color: hsl(0, 0%, 8%);
+            border-width: 8px;
+        }
+
+        .header {
+            padding: 20px;
+            font-size: 35px;
+            text-align: center;
+        }
+
+        .header:hover {
+            cursor: move;
+        }
+
+        .injectButton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 20px;
+        }
+
+        .buttonsHolder {
+            display: grid;
+            align-items: center;
+            justify-content: center;
+            row-gap: 10px;
+            padding-bottom: 20px;
+            padding-top: 30px;
+            max-height: 210px;
+            overflow: overlay;
+        }
+
+        .buttonsHolder::-webkit-scrollbar {
+            width: 16px;
+            inset:inherit;
+        }
+
+        .buttonsHolder::-webkit-scrollbar-track {
+            border-radius: 8px;
+            background-color: hsl(0, 0%, 15%);
+            border: 1px solid hsl(0, 0%, 10%);
+        }
+
+        .buttonsHolder::-webkit-scrollbar-thumb {
+            border-radius: 8px;
+            border: 3px solid transparent;
+            background-clip: content-box;
+            background-color: hsl(0, 0%, 8%);
+        }
+
+        hr {
+            color:white;
+            width: 90%;
+        }
+        
+        button {
+            color:white;
+            background: hsl(0, 0%, 20%);
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 10px;
+            width: 125px;
+            height: 45px;
+            box-shadow: none;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            position: relative; 
+        }
+
+        .buttons {
+            color:white;
+            background: hsl(0, 0%, 20%);
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 15px;
+            padding: 10px;
+            width: 245px;
+            height: 45px;
+            box-shadow: none;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+        }
+
+        button:hover {
+            cursor: pointer;
+            background-color: hsl(0, 0%, 30%);
+        }
+    </style>
+    <script src="BMenu.js"></script>
+    <script>
+        $(function() {
+            $('.BMenu').draggable().css("position", "absolute");
+        });
+    </script>
+</div>
