@@ -1,23 +1,24 @@
 <div class="BMenu">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-    <div class="menu">
-        <div class="header">
+    <div class="theMenu">
+        <div class="bHeader">
             BMenu
         </div>
-        <hr>
+        <hr class="lines">
         <div class="buttonsHolder"></div>
-        <hr>
+        <hr class="lines">
         <div class="injectButton">
-            <button onclick="inject()">Inject</button>
+            <button onclick="inject()" class="injectButtons">Inject</button>
         </div>
     </div>
     <style>
         .BMenu {
             z-index: 9999;
+            top: 0px;
+            left: 0px;
+            position: absolute;
         }
 
-        .menu {
+        .theMenu {
             color:white;
             background: hsl(0, 0%, 15%);
             width: 400px;
@@ -30,13 +31,13 @@
             border-width: 8px;
         }
 
-        .header {
+        .bHeader {
             padding: 20px;
             font-size: 35px;
             text-align: center;
         }
 
-        .header:hover {
+        .bHeader:hover {
             cursor: move;
         }
 
@@ -76,12 +77,12 @@
             background-color: hsl(0, 0%, 8%);
         }
 
-        hr {
+        .lines {
             color:white;
             width: 90%;
         }
         
-        button {
+        .injectButtons {
             color:white;
             background: hsl(0, 0%, 20%);
             font-family: Arial, Helvetica, sans-serif;
@@ -117,14 +118,10 @@
             position: relative;
         }
 
-        button:hover {
+        .buttons:hover, .injectButtons:hover {
             cursor: pointer;
             background-color: hsl(0, 0%, 30%);
         }
     </style>
-    <script>
-        $(function() {
-            $('.BMenu').draggable().css("position", "absolute");
-        });
-    </script>
+    <script src="BMenu.js"></script>
 </div>
