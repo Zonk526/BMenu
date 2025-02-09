@@ -166,7 +166,7 @@ const giveSomeoneGold = () => {
     })())[1].children[0]._owner;
 
     stateNode.props.liveGameController.getDatabaseVal('c', players => {
-        let [player, {g}] = Object.entries(players).map(player => ([player[0], {g : player[1].g ? player[1].g : 0}])).find(([name, {g}]) => g == Math.min(...Object.values(players).map(player => player.g ? player.g : 0)));
+        let [player, {g}] = Object.entries(players).map(player => ([player[0], {g : player[1].g || 0}])).find(([name, {g}]) => g == Math.min(...Object.values(players).map(player => player.g || 0)));
 
         stateNode.props.liveGameController.setVal({
             path: `c/${stateNode.props.client.name}/tat`,
@@ -390,7 +390,7 @@ const giveSomeoneCrypto = () => {
     })())[1].children[0]._owner;
 
     stateNode.props.liveGameController.getDatabaseVal('c', players => {
-        let [player, {cr}] = Object.entries(players).map(player => ([player[0], {cr : player[1].cr ? player[1].cr : 0}])).find(([name, {cr}]) => cr == Math.min(...Object.values(players).map(player => player.cr ? player.cr : 0)));
+        let [player, {cr}] = Object.entries(players).map(player => ([player[0], {cr : player[1].cr || 0}])).find(([name, {cr}]) => cr == Math.min(...Object.values(players).map(player => player.cr || 0)));
 
         stateNode.props.liveGameController.setVal({
             path: `c/${stateNode.props.client.name}/tat`,
@@ -506,11 +506,13 @@ const setWeight = () => {
     window.prompt = inject.contentWindow.prompt.bind(window);
     inject.remove();
 
-    let amount = prompt("Whose fossils would you like to reset?");
+    let amount = prompt("Enter the number you want to set your weight to");
 
     if (typeof parseInt(amount) == "number") {
-        stateNode.state.weight = parseInt(amount);
-        stateNode.state.weight2 = parseInt(amount);
+        stateNode.setState({
+            weight: parseInt(amount),
+            weight2: parseInt(amount)
+        });
     }
 
     stateNode.props.liveGameController.setVal({
@@ -527,6 +529,11 @@ const forceFrenzy = () => {
         {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
     })())[1].children[0]._owner;
 
+    clearTimeout(stateNode.frenzyTimeout);
+    clearTimeout(stateNode.partyTimeout);
+
+    stateNode.safe = true;
+
     stateNode.props.liveGameController.setVal({
         path: `c/${stateNode.props.client.name}`,
         val: {
@@ -535,7 +542,23 @@ const forceFrenzy = () => {
             f: "Frenzy",
             s: true
         }
-    })
+    });
+}
+
+const maxLure = () => {
+    const { stateNode } = Object.values((function react(potentialDiv = document.querySelector('body>div')) 
+        {return Object.values(potentialDiv)[1]?.children?.[0]?._owner.stateNode ? potentialDiv : react(potentialDiv.querySelector(':scope>div'));
+    })())[1].children[0]._owner;
+
+    stateNode.props.liveGameController.setVal({
+        path: `c/${stateNode.props.client.name}`,
+        val: {
+            b: stateNode.props.client.blook,
+            w: stateNode.state.weight,
+            f: "Lure 4",
+            s: true
+        }
+    });
 }
 
 
@@ -920,7 +943,7 @@ function inject() {
                 constantlyChangePasswords, takePlayersCrypto, autoPlayCrypto, autoGuessPassword, giveSomeoneCrypto],
         "factory" : [forceCashFromAllBlooks, maxLevelBlooks, lowPricedBlooks, highPayoutBlooks, allBlooksToMegaBot, forceGlitch, neverGetGlitches],
         "cafe" : [unlockAllFoods, maxLevelFood, maxStockFood],
-        "fishingfrenzy" : [setWeight, forceFrenzy], 
+        "fishingfrenzy" : [setWeight, forceFrenzy, maxLure], 
         "Survival" : [maxLevelAbilities]
     }
     
