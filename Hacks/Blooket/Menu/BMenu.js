@@ -948,6 +948,14 @@ function inject() {
     }
     
     scripts[0] = generalScripts[0];
+
+    if (location.pathname == "/host/settings") {
+        scripts[1] = generalScripts[3];
+    } else if (location.pathname == '/play/lobby') {
+        scripts[1] = generalScripts[2];
+    }
+
+
     gamemodeScripts[url].forEach(script => scripts.push(script));
     
     try {
